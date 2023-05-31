@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/Services/user.service';
+import {faUser, faEnvelope, faLock} from '@fortawesome/free-solid-svg-icons'
 
 @Component({
   selector: 'app-registro',
@@ -8,7 +9,12 @@ import { UserService } from 'src/app/Services/user.service';
 })
 export class RegistroComponent implements OnInit {
 
+  //icons
+  faUser = faUser;
+  faEnvelope = faEnvelope;
+  faLock = faLock;
 
+  //datos del formulario
   Nombre : string  ="";
   Apellido : string = "";
   Email : string  = "";
