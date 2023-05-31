@@ -4,9 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { HttpClient } from '@angular/common/http'
 
 import { NavBarComponent } from './Components/nav-bar/nav-bar.component';
 import { RegistroComponent } from './Components/registro/registro.component';
