@@ -1,5 +1,5 @@
 
-<div class="container d-flex justify-content-center">
+<div class="container d-flex justify-content-center mt-5">
     <div class="card mb-3" style="max-width: 60rem;">
         <div class="row g-0">
             <div class="col-md-5">
@@ -12,23 +12,23 @@
                         <p class="card-text">¡ Crea una cuenta para poder interactuar con la comunidad !</p>
                     </div>
                     <div class="container mt-5 col-md-9">
-                        <form action="">
+                        <form  #f = "ngForm" (ngSubmit)="f.form.valid && Register()">
                             <div class="input-group mb-3">
                                 <fa-icon style="font-size:2rem; margin-right: 1rem;" [icon]="faUser"></fa-icon>
-                                <input class="form-control" placeholder="Nombre"  type="text" name="Nombre" [(ngModel)]="Nombre">
+                                <input class="form-control" placeholder="Nombre"  type="text" name="Nombre" [(ngModel)]="Usuario.Nombre">
                                 
-                                <input class="form-control" placeholder="Apellido"  type="text" name="Apellido" [(ngModel)]="Apellido">
+                                <input class="form-control" placeholder="Apellido"  type="text" name="Apellido" [(ngModel)]="Usuario.Apellido">
                             </div>
                             <div class="input-group mb-3">
                                 <fa-icon style="font-size:2rem; margin-right: 1rem;" [icon]="faEnvelope"></fa-icon>
-                                <input class="form-control" placeholder="Correo"  type="email" name="Email" [(ngModel)]="Email">
+                                <input class="form-control" placeholder="Correo"  type="email" name="Email" [(ngModel)]="Usuario.Email">
                             </div>
                             <div class="input-group mb-4">
                                 <fa-icon style="font-size:2rem; margin-right: 1rem;" [icon]="faLock"></fa-icon>
-                                <input class="form-control" placeholder="Contraseña"  type="password" name="Password" [(ngModel)]="Password">
+                                <input class="form-control" placeholder="Contraseña"  type="password" name="Password" [(ngModel)]="Usuario.Password">
                             </div>
                             <div class="d-grid gap-2 ">
-                                <button class="btn btn-dark btn-lg">Registrarse</button>
+                                <button class="btn btn-dark btn-lg" type="submit">Registrarse</button>
                             </div>
                         </form>
                     </div>

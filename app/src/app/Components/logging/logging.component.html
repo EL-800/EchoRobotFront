@@ -1,0 +1,37 @@
+
+
+<div class="container d-flex justify-content-center mt-5">
+    <div class="card mb-3" style="max-width: 50rem;">
+        <div class="row g-0">
+            <div class="col-md-5">
+                <img src="assets/login.jpg" class="img-fluid " alt="..." >
+            </div>
+            <div class="col-md-6 mt-5">
+                <div class="card-body ">
+                    <div class="container d-flex flex-column align-items-center">
+                        <h5 class="card-title">Iniciar Sesión</h5>
+                    </div>
+                    <div class="container mt-5 col-md-12">
+                        <form  #f = "ngForm" (ngSubmit)="f.form.valid ">
+                            <div class="input-group mb-3">
+                                <fa-icon style="font-size:2rem; margin-right: 1rem;" [icon]="faEnvelope"></fa-icon>
+                                <input class="form-control" placeholder="Correo"  type="email" name="Email" [(ngModel)]="Email">
+                            </div>
+                            <div class="input-group mb-4">
+                                <fa-icon style="font-size:2rem; margin-right: 1rem;" [icon]="faLock"></fa-icon>
+                                <input class="form-control" placeholder="Contraseña"  type="password" name="Password" [(ngModel)]="Password">
+                            </div>
+                            <div class="d-grid gap-2 ">
+                                <button class="btn btn-dark btn-lg" type="submit">Iniciar Sesion</button>
+                            </div>
+                            <div class="d-grid gap-2 mt-3 mb-5">
+                                <a class="btn" routerLink="/registro">Registrarse</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
