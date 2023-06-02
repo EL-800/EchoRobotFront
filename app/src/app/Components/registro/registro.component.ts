@@ -3,6 +3,7 @@ import { UserService } from 'src/app/Services/user.service';
 import {faUser, faEnvelope, faLock} from '@fortawesome/free-solid-svg-icons'
 import { User } from 'src/app/models/User.model';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-registro',

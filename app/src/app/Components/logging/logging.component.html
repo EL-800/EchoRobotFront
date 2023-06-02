@@ -12,14 +12,14 @@
                         <h5 class="card-title">Iniciar Sesión</h5>
                     </div>
                     <div class="container mt-5 col-md-12">
-                        <form  #f = "ngForm" (ngSubmit)="f.form.valid ">
+                        <form  #f = "ngForm" (ngSubmit)="f.form.valid && logging()">
                             <div class="input-group mb-3">
                                 <fa-icon style="font-size:2rem; margin-right: 1rem;" [icon]="faEnvelope"></fa-icon>
-                                <input class="form-control" placeholder="Correo"  type="email" name="Email" [(ngModel)]="Email">
+                                <input class="form-control" placeholder="Correo"  type="email" name="Email" [(ngModel)]="login.email">
                             </div>
                             <div class="input-group mb-4">
                                 <fa-icon style="font-size:2rem; margin-right: 1rem;" [icon]="faLock"></fa-icon>
-                                <input class="form-control" placeholder="Contraseña"  type="password" name="Password" [(ngModel)]="Password">
+                                <input class="form-control" placeholder="Contraseña"  type="password" name="Password" [(ngModel)]="login.password">
                             </div>
                             <div class="d-grid gap-2 ">
                                 <button class="btn btn-dark btn-lg" type="submit">Iniciar Sesion</button>
