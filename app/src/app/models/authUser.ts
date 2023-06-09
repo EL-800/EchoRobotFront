@@ -1,5 +1,5 @@
 export interface authUser{
-    Nombre : string
-    Token : string;
-    Id : number;
+    nombre : string
+    token : string;
+    idUsuario : number;
 }

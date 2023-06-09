@@ -26,15 +26,15 @@ export class LoggingComponent implements OnInit {
   ngOnInit(): void {
   }
   logging(){
-    this._authService.logging(this.login).subscribe(
-      {
-        next: resp=>{
-          console.log("Inicio correcto" + resp)
+    this._authService.logging(this.login).subscribe(res =>{
+        if(res.exito === 1){
           this._router.navigate(['/'])
-        },
-        error: err =>{
-          
+        }else{
+          throw new Error("Credenciales incorrectas")
         }
+      },
+      err=>{
+        console.log("error " + err)
       }
     )
   }

@@ -18,7 +18,7 @@ export class JwtInterceptor {
         if(usuario){
             request = request.clone({
                 setHeaders: {
-                    Authorization : `Bearer ${usuario.Token}`
+                    Authorization : `Bearer ${usuario.token}`
                 }
             })
         }

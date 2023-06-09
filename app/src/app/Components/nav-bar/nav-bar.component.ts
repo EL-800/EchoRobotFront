@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { empty, map } from 'rxjs';
 import { AuthService } from 'src/app/Services/auth.service';
 import { UserService } from 'src/app/Services/user.service';
@@ -17,23 +18,21 @@ export class NavBarComponent implements OnInit {
   username : string = "";
   fotoBase64 : string = "";
 
-  constructor(private _auth : AuthService , private _userService : UserService) {
-    if(Object.entries(_auth.UserData).length == 0 ){
-      this.isLoggedIn = false;
-      console.log("np sesion");
-    }else{
-      console.log("session")
-      this.isLoggedIn = true;
-      const data = _auth.UserData;
-      console.log(data.Token);
-    }
+  constructor(private _auth : AuthService , private _userService : UserService , private _router : Router) {
+    
+    this._auth.User.subscribe(res=>{
+      const auth :authUser = res;
+      this.username = auth.nombre
+      this.isLoggedIn =!this.isLoggedIn;
+    })
   }
 
+  
   
 
   logout(){
     this._auth.logout();
-
+    this._router.navigate(['/home'])
   }
   ngOnInit(): void {
   }

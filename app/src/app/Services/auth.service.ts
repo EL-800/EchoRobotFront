@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, catchError, map, of, throwError } from 'rx
 import { authUser } from '../models/authUser';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoggingUser } from '../models/Logging.model';
+import { Response } from '../models/response';
 
 const httpOptions ={
   headers:new HttpHeaders({
@@ -32,20 +33,15 @@ export class AuthService {
     return this.UserSubject.value;
   }
 
-  logging(logging: LoggingUser){
-    return this._httpCLient.post(this.AuthUrl,logging,httpOptions).pipe(
-      map(res =>{
-        const user = res as authUser
-        //const user : authUser = JSON.parse(res.toString());
-        localStorage.setItem('usuario',JSON.stringify(user))
-        this.UserSubject.next(user);
-        return user;
-      }),
-      catchError(err =>{
-        if(err.status == 400){
-          console.log("Credenciales incorrectas")
-          return err;
+  logging(logging: LoggingUser):Observable<Response>{
+    return this._httpCLient.post<Response>(this.AuthUrl,logging,httpOptions).pipe(
+      map (res=>{
+        if(res.exito === 1){
+          const data : authUser = res.data;
+          localStorage.setItem('usuario',JSON.stringify(data));
+          this.UserSubject.next(data);
         }
+        return res;
       })
     )
   }
