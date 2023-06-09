@@ -18,7 +18,7 @@ const httpOptions ={
 })
 export class UserService {
   urlApiUser : string = "https://localhost:7173/api/User";
-
+  urlPhoto : string  = "https://localhost:7173/api/User/userPhoto"
 
   constructor(private _http : HttpClient) {
   }
@@ -27,7 +27,4 @@ export class UserService {
     return this._http.post<Response>(this.urlApiUser,User);
   }
 
-  getImage(id: number):Observable<Response>{
-    return this._http.post<Response>(this.urlApiUser,id);
-  }
 }

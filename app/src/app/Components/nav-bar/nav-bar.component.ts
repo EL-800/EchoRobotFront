@@ -16,18 +16,19 @@ export class NavBarComponent implements OnInit {
 
   isLoggedIn : boolean = false;
   username : string = "";
-  fotoBase64 : string = "";
+  imgUrl : string = "";
 
   constructor(private _auth : AuthService , private _userService : UserService , private _router : Router) {
     
     this._auth.User.subscribe(res=>{
       const auth :authUser = res;
       this.username = auth.nombre
+      this.imgUrl = res.urlFoto;
       this.isLoggedIn =!this.isLoggedIn;
+      console.log(this.imgUrl)
     })
   }
 
-  
   
 
   logout(){
