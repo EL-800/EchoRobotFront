@@ -12,6 +12,7 @@ import { RegistroComponent } from './Components/registro/registro.component';
 import { HomeComponent } from './Components/home/home.component';
 import { LoggingComponent } from './Components/logging/logging.component';
 import { JwtInterceptor } from './Security/jwt.interceptor';
+import { HomeComunityComponent } from './Components/Comunity/home-comunity/home-comunity.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { JwtInterceptor } from './Security/jwt.interceptor';
     NavBarComponent,
     RegistroComponent,
     HomeComponent,
-    LoggingComponent
+    LoggingComponent,
+    HomeComunityComponent
   ],
   imports: [
     BrowserModule,
