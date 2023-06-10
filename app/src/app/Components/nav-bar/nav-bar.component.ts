@@ -17,15 +17,21 @@ export class NavBarComponent implements OnInit {
   isLoggedIn : boolean = false;
   username : string = "";
   imgUrl : string = "";
+  iniciales : string = "";
 
   constructor(private _auth : AuthService , private _userService : UserService , private _router : Router) {
     
     this._auth.User.subscribe(res=>{
-      const auth :authUser = res;
-      this.username = auth.nombre
-      this.imgUrl = res.urlFoto;
-      this.isLoggedIn =!this.isLoggedIn;
-      console.log(this.imgUrl)
+      if(Object.entries(res).length != 0){
+        const auth :authUser = res;
+        this.username = auth.nombre
+        this.imgUrl = res.urlFoto;
+        this.iniciales = this.username.charAt(0);
+        this.isLoggedIn =!this.isLoggedIn;
+      }
+      else{
+        this.isLoggedIn = false;
+      }
     })
   }
 
