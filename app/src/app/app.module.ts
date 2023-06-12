@@ -13,6 +13,7 @@ import { HomeComponent } from './Components/home/home.component';
 import { LoggingComponent } from './Components/logging/logging.component';
 import { JwtInterceptor } from './Security/jwt.interceptor';
 import { HomeComunityComponent } from './Components/Comunity/home-comunity/home-comunity.component';
+import { AddPulicationComponent } from './Components/Comunity/add-pulication/add-pulication.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { HomeComunityComponent } from './Components/Comunity/home-comunity/home-
     RegistroComponent,
     HomeComponent,
     LoggingComponent,
-    HomeComunityComponent
+    HomeComunityComponent,
+    AddPulicationComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,88 @@
+<div class="container mt-5 col-md-8">
+    <div class="row">
+        <h4>Agregar publicación</h4>
+    </div>
+    <div class="card mt-3" style="max-width: 840px;">
+        <div class="row g-0">
+            <div class="col-md-6">
+
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+
+                    
+                        <div class="carousel-indicators">
+                        <div *ngIf="files.length === 0 ">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                                class="active" aria-current="true"></button>
+                        </div>
+                        <div *ngIf="files.length != 0 ">
+                            <button *ngFor="let image of files; index as i; first as isFisrt" type="button"
+                                data-bs-target="#carouselExampleIndicators" [attr.data-bs-slide-to]="i" class="active"
+                                ngClass="" aria-current="true" [ngClass]="{'active' : isFisrt }"></button>
+                        </div>
+                    </div>
+                    
+
+                    <div class="carousel-inner">
+                        <div *ngIf="files.length === 0" class="carousel-item active">
+                            <div class="no-media">
+                                <p>Agrega archivos</p>
+                            </div>
+                        </div>
+                        <div *ngIf="files.length != 0">
+                            <div *ngFor="let image of dataUrl; index as i; first as isFirst"
+                                class ="carousel-item  active" [ngClass]="{'active': isFirst}">                        
+                                    <img [src]="image" alt="img" class="d-block w-100">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <form action="">
+                    <div class="container d-flex justify-content-center flex-column mt-4">
+                        <div class="input-group mb-3 col-md-6">
+                            <input class="form-control" placeholder="Titulo" type="text">
+                        </div>
+                        <div class="input-group mb-3 col-md-6">
+                            <div class="form-floating ">
+                                <textarea class="form-control text-tarea" placeholder="Añade un " id=""></textarea>
+                                <label for="floatingTextArea">Añade un comentario</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="file" (change)="capturarFile($event)" class="form-control" multiple>
+                        </div>
+                        <div class="d-grid gap-2 mt-3 mb-4">
+                            <input type="submit" class="btn btn-primary">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+    <div class="container d-flex justify-content-center flex-column mt-4 col-md-6">
+        <div class="input-group mb-3 col-md-6">
+            <input class="form-control" placeholder="Titulo" type="text">
+        </div>
+        <div class="input-group mb-3 col-md-6">
+            <div class="form-floating ">
+                <textarea class="form-control" placeholder="Añade un " id=""></textarea>
+                <label for="floatingTextArea">Añade un comentario</label>
+            </div>
+        </div>
+    </div>
+-->
