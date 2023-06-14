@@ -1,0 +1,44 @@
+
+.tittle{
+    border-bottom:solid 1px rgb(79, 78, 78);
+    padding-bottom: 1rem;
+    font-style: italic;
+}
+
+.avatar {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: whitesmoke;
+    margin-top: 2rem;
+    background-color: rgb(29, 28, 28);
+}
+.publication{
+    border-bottom:solid 1px rgb(79, 78, 78);
+    padding-bottom: 4rem;
+    width: 100%;
+    flex-direction: row;
+}
+.content{
+    display: flex;
+    width: 100%;
+}
+.avatar-name{
+    padding-left: 2rem;
+    margin-top: 2rem;
+    color: rgb(72, 71, 71);
+    font-weight: bold;
+}
+.element{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.element h5{
+    margin-left: 15px;
+}
+
