@@ -1,6 +1,10 @@
+import { Comment } from "./comment.model";
+
 export interface Publication{
     idPublicacion : number;
-    autor : string;
+    titulo : string;
+    nombre : string;
+    apellido : string
     foto : string;
     fecha : Date;
     descripcion : string,

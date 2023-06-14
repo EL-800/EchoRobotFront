@@ -1,4 +1,4 @@
-export interface comment{
+export interface Comment{
     nombre : string,
     apellido : string,
     foto : string,

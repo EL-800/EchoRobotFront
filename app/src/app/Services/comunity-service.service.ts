@@ -19,6 +19,8 @@ export class ComunityServiceService {
   urlAdd : string = "https://localhost:7173/api/Comunity/AddPublication";
   urlListPublications : string = "https://localhost:7173/api/Comunity/Publicaciones";
 
+  urlGetPublication : string = "https://localhost:7173/api/Comunity/Publicacion";
+
   constructor(private _httpCliet : HttpClient) { 
 
   }
@@ -34,5 +36,9 @@ export class ComunityServiceService {
 
   listPublications():Observable<any>{
     return this._httpCliet.get<Response>(this.urlListPublications,httpOptions);
+  }
+
+  getPublication(id : number):Observable<any>{
+    return this._httpCliet.get<Response>(this.urlGetPublication+`?id=${id}`,httpOptions)
   }
 }

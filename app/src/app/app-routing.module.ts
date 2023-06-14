@@ -14,7 +14,7 @@ const routes: Routes = [
   {path:"auth/logging",component:LoggingComponent},
   {path:"comunity",component:HomeComunityComponent},
   {path: "comunity/AddPublication",component:AddPulicationComponent},
-  {path: "comunity/Publication",component:PublicationComponent}
+  {path: "comunity/Publication/:id",component:PublicationComponent}
 ];
 
 @NgModule({

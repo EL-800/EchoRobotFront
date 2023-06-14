@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ComunityServiceService } from 'src/app/Services/comunity-service.service';
 import { ListPublication } from 'src/app/models/list-publication.model';
 
@@ -9,7 +10,7 @@ import { ListPublication } from 'src/app/models/list-publication.model';
 })
 export class HomeComunityComponent implements OnInit {
 
-  constructor(private comunity : ComunityServiceService) { }
+  constructor(private comunity : ComunityServiceService, private router : Router) { }
   
   listPublication : ListPublication[] = []
 
@@ -23,7 +24,6 @@ export class HomeComunityComponent implements OnInit {
     this.comunity.listPublications().subscribe(res =>{
       if(res.exito === 1){
         this.listPublication = res.data;
-        console.log(this.listPublication);
       }
     })
   }
@@ -40,6 +40,8 @@ export class HomeComunityComponent implements OnInit {
     return null
   }
   getPublication(id : number){
-    console.log(id)
+    if(id){
+      this.router.navigate(['/comunity/Publication',id])
+    }
   }
 }
