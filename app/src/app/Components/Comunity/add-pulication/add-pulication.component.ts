@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { map } from 'rxjs';
+import { AuthService } from 'src/app/Services/auth.service';
+import { ComunityServiceService } from 'src/app/Services/comunity-service.service';
+import { PublicationRequest } from 'src/app/models/AddPublicationRequest.model';
 
 @Component({
   selector: 'app-add-pulication',
@@ -11,8 +16,17 @@ export class AddPulicationComponent implements OnInit {
   files : File[] = [];
   dataUrl : string[] = [];
 
+  //formulario
+  formulario : PublicationRequest =  {
+    titulo: "",
+    descripcion : "",
+    elementos : [],
+    idAutor : 0
+    
+  }
+
   previsualizacion: string = "";
-  constructor(private sanitizer: DomSanitizer) { }
+  constructor(private sanitizer: DomSanitizer, private comunity : ComunityServiceService, private router : Router , private auth : AuthService) { }
 
   ngOnInit(): void {
   }
@@ -24,19 +38,10 @@ export class AddPulicationComponent implements OnInit {
     for(let archivoCapturado of this.files){
       this.extraerBase64(archivoCapturado).then((image :any) =>{
         this.dataUrl.push = image.base;
-        console.log(image.base);
         this.dataUrl[i] = image.base;
         i++; 
       })
     }
-   
-    /* const archivoCapturado = event.target.files[0];
-    
-    this.extraerBase64(archivoCapturado).then((imagen:any) =>{
-      this.previsualizacion = imagen.base;
-      console.log(imagen);
-    })
-    */
   }
 
   extraerBase64 = async ($event :any) => new Promise((resolve,reject)=>{
@@ -64,5 +69,30 @@ export class AddPulicationComponent implements OnInit {
     }
 
   })
+
+  addPublication(){
+    this.auth.User.subscribe(res =>{
+      this.formulario.idAutor = res.idUsuario;
+    })
+
+    let formData : FormData = new FormData();
+    formData.append("Titulo",this.formulario.titulo);
+    formData.append("IdAutor",this.formulario.idAutor.toString());
+    formData.append("Descripcion",this.formulario.descripcion);
+
+
+    for(let file of this.files){
+      formData.append("Elementos",file);
+    }
+
+
+
+    this.comunity.addPublication(formData).subscribe(res =>{
+      if(res.exito === 1){
+        console.log(res);
+        this.router.navigate(["/comunity"])
+      }
+    })
+  }
 
 }

@@ -12,3 +12,6 @@
 .text:hover{
     font-weight: bold;
 }
+.table-seleccionada{
+    cursor: pointer;
+}

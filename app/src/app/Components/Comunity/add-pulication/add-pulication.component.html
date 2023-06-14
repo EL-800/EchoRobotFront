@@ -8,8 +8,8 @@
 
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
 
-                    
-                        <div class="carousel-indicators">
+
+                    <div class="carousel-indicators">
                         <div *ngIf="files.length === 0 ">
                             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
                                 class="active" aria-current="true"></button>
@@ -20,7 +20,7 @@
                                 ngClass="" aria-current="true" [ngClass]="{'active' : isFisrt }"></button>
                         </div>
                     </div>
-                    
+
 
                     <div class="carousel-inner">
                         <div *ngIf="files.length === 0" class="carousel-item active">
@@ -30,8 +30,8 @@
                         </div>
                         <div *ngIf="files.length != 0">
                             <div *ngFor="let image of dataUrl; index as i; first as isFirst"
-                                class ="carousel-item  active" [ngClass]="{'active': isFirst}">                        
-                                    <img [src]="image" alt="img" class="d-block w-100">
+                                class="carousel-item  active" [ngClass]="{'active': isFirst}">
+                                <img [src]="image" alt="img" class="d-block w-100">
                             </div>
                         </div>
                     </div>
@@ -49,19 +49,22 @@
 
             </div>
             <div class="col-md-6">
-                <form action="">
+                <form (ngSubmit)="addPublication()"> 
                     <div class="container d-flex justify-content-center flex-column mt-4">
                         <div class="input-group mb-3 col-md-6">
-                            <input class="form-control" placeholder="Titulo" type="text">
+                            <input class="form-control" placeholder="Titulo" type="text" [(ngModel)]="formulario.titulo"
+                                name="title">
                         </div>
                         <div class="input-group mb-3 col-md-6">
                             <div class="form-floating ">
-                                <textarea class="form-control text-tarea" placeholder="Añade un " id=""></textarea>
+                                <textarea class="form-control text-tarea" placeholder="Añade un comentario"
+                                    [(ngModel)]="formulario.descripcion" name="comment"></textarea>
                                 <label for="floatingTextArea">Añade un comentario</label>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <input type="file" (change)="capturarFile($event)" class="form-control" multiple>
+                            <input type="file" (change)="capturarFile($event)" class="form-control"
+                            [(ngModel)]="formulario.elementos" name="images" accept="image/*" multiple>
                         </div>
                         <div class="d-grid gap-2 mt-3 mb-4">
                             <input type="submit" class="btn btn-primary">
