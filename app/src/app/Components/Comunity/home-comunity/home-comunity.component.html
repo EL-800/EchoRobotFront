@@ -15,18 +15,18 @@
                 <a class="text nav-link me-5"  aria-current="page">Mis publicaciones</a>
             </li>
             <li class="nav-item ">
-                <a class="btn btn-dark position-absolute top-0 end-0" routerLink="/comunity/AddPublication">Crear publicación</a>
+                <a *ngIf="isLogged" class="btn btn-dark position-absolute top-0 end-0" routerLink="/comunity/AddPublication">Crear publicación</a>
             </li>  
       
         </ul>
     </section>
     <section class="mt-3">
+        <!--
         <table class="table table-hover">
             <thead class="table-dark">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Tema</th>
-                    <th scope="col">Autor</th>
                     <th scope="col"># Comentarios</th>
                     <th scope="col">Fecha</th>
                 </tr>
@@ -35,12 +35,33 @@
                 <tr *ngFor="let publication of listPublication; index as i" 
                 (click)="getPublication(publication.idPublicacion)" class="table-seleccionada">
                     <th class="pb-3">{{i + 1 }}</th>
-                    <th>{{publication.titulo}}</th>
-                    <th>{{publication.nombreAutor}}</th>
+                    <th>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <img [src]="publication.foto" class="img" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </th>
                     <th>{{publication.numComentarios}}</th>
                     <th>{{Activity(publication.fechaPublicacion)}}</th>
                 </tr>
             </tbody>
         </table>
+        -->
+        <div class="row">
+            <div *ngFor="let publication of listPublication; index as i" class="col-4  col-sm-4" style="cursor: pointer;">
+                <div class="card mb-2">
+                    <img [src]="publication.foto" class="img" alt="imagenRepresentativa" (click)="getPublication(publication.idPublicacion)">
+                    <div class=" card-body-publication">
+                        <h4>{{publication.titulo}}</h4>
+                        <div class="div-card-body">
+                            <p class="card-text justify-text">{{publication.descripcion}} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 </div>

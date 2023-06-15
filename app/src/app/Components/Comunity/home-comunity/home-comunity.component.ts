@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/Services/auth.service';
 import { ComunityServiceService } from 'src/app/Services/comunity-service.service';
 import { ListPublication } from 'src/app/models/list-publication.model';
 
@@ -10,13 +11,21 @@ import { ListPublication } from 'src/app/models/list-publication.model';
 })
 export class HomeComunityComponent implements OnInit {
 
-  constructor(private comunity : ComunityServiceService, private router : Router) { }
+  constructor(private comunity : ComunityServiceService, private router : Router, private auth : AuthService) { }
   
-  listPublication : ListPublication[] = []
+  listPublication : ListPublication[] = new Array<ListPublication>()
 
+  isLogged : boolean = false
 
   ngOnInit(): void {
     this.ObtenerPublicaciones();
+    this.auth.User.subscribe(res=>{
+      if(Object.entries(res).length > 0){
+        this.isLogged=true;
+      }else{
+        this.isLogged=false;
+      }
+    })
   }
 
 
@@ -25,6 +34,7 @@ export class HomeComunityComponent implements OnInit {
       if(res.exito === 1){
         this.listPublication = res.data;
       }
+      console.log(this.listPublication)
     })
   }
   Activity(fechaEnviada : Date){

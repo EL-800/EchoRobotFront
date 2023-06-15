@@ -5,4 +5,5 @@ export interface ListPublication{
     fechaPublicacion : Date,
     numComentarios : number;
     nombreAutor : string;
+    foto : string
 }
