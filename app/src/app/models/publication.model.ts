@@ -9,5 +9,6 @@ export interface Publication{
     fecha : Date;
     descripcion : string,
     multimedia : string[],
-    comentarios : Comment[]
+    comentarios : Comment[],
+    idAutor :number
 }

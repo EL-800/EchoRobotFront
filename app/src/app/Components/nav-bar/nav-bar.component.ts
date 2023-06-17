@@ -26,7 +26,7 @@ export class NavBarComponent implements OnInit {
         const auth :authUser = res;
         this.username = auth.nombre
         this.imgUrl = res.urlFoto;
-        this.iniciales = this.username.charAt(0);
+        this.iniciales = this.username.charAt(0).toUpperCase() + res.apellido.charAt(0).toUpperCase();
         this.isLoggedIn =!this.isLoggedIn;
       }
       else{

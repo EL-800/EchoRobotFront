@@ -1,20 +1,26 @@
-<div class="container mt-5 col-md-9">
-    <div class="tittle">
-        <h1>{{publication.titulo}}</h1>
+<div class="container mt-5 col-md-7">
+    <div class="row tittle">
+        <div class="col-9">
+            <h1>{{publication.titulo}}</h1>
+        </div>
+        <div class="col-3" *ngIf="isAuthor">
+            <button class="btn btn-danger">Eliminar Publicacion</button>
+        </div>
     </div>
     <div class="mt-2">
 
         <div class="publication">
 
             <div class="content">
-                <div class="avatar">
-                    <h2>PM</h2>
+                <img *ngIf="publication.foto" [src]="publication.foto" alt="Foto" class="avatar">
+                <div *ngIf="!publication.foto" class="p-3 mb-2 bg-light text-dark avatar">
+                    <h2 class>{{getIniciales(publication.nombre, publication.apellido)}}</h2>
                 </div>
                 <div class="row w-100">
-                    <div class="col-10 avatar-name">
+                    <div class="col-9 avatar-name">
                         <h4>{{publication.nombre}} {{publication.apellido}}</h4>
                     </div>
-                    <div class="col-2 mt-1">
+                    <div class="col-3 mt-1">
                         <p>{{Activity(publication.fecha)}}</p>
                     </div>
                     <div class="col-12 ms-4">
@@ -86,14 +92,14 @@
 
         <div class="publication" *ngFor="let comentario of publication.comentarios">
             <div class="content">
-                <div class="avatar">
-                    <h2>800</h2>
-                </div>
+                
+                    <img *ngIf="comentario.foto" [src]="comentario.foto" alt="Foto" class="avatar">
+                    <div *ngIf="comentario.foto == null " class="p-3 mb-2 avatar"><h2 class>{{getIniciales(comentario.nombre, comentario.apellido)}}</h2></div>
                 <div class="row w-100">
-                    <div class="col-11 avatar-name">
+                    <div class="col-9 avatar-name">
                         <h4>{{comentario.nombre}} {{comentario.apellido}}</h4>
                     </div>
-                    <div class="col-1 mt-1">
+                    <div class="col-3 mt-1">
                         <p>{{Activity(comentario.fecha)}}</p>
                     </div>
                     <div class="col-12 ms-4">
@@ -104,14 +110,22 @@
         </div>
 
         
-        <div class="container mt-5 d-flex justify-content-center">
-            <h2>Agrege un comentario</h2>
-            <div class="col-md-5">
-                <form >
-                    
-                </form>
+        <div *ngIf="isLogged" class="container mt-5  ">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8">
+                    <form [formGroup]="formComment" (ngSubmit)="agregarComentario()">
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Agrege un comentario</label>
+                            <textarea class="form-control" formControlName="comment" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <input type="submit" class="btn btn-primary" value="Agregar comentario">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
+
 
     </div>
 </div>

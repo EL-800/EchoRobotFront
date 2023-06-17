@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PublicationRequest } from '../models/AddPublicationRequest.model';
 import { Observable } from 'rxjs';
+import { Comment } from '../models/comment.model';
 
 
 const httpOptions = {
@@ -20,6 +21,8 @@ export class ComunityServiceService {
   urlListPublications : string = "https://localhost:7173/api/Comunity/Publicaciones";
 
   urlGetPublication : string = "https://localhost:7173/api/Comunity/Publicacion";
+
+  urlAddComment : string = "https://localhost:7173/api/Comunity/AddComentario";
 
   constructor(private _httpCliet : HttpClient) { 
 
@@ -40,5 +43,9 @@ export class ComunityServiceService {
 
   getPublication(id : number):Observable<any>{
     return this._httpCliet.get<Response>(this.urlGetPublication+`?id=${id}`,httpOptions)
+  }
+
+  addCommnet(comment : FormData):Observable<Response>{
+    return this._httpCliet.post<Response>(this.urlAddComment,comment,httpOptions);
   }
 }

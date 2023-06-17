@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { min } from 'rxjs';
 import { ComunityServiceService } from 'src/app/Services/comunity-service.service';
 import { Publication } from 'src/app/models/publication.model';
 import { Comment } from 'src/app/models/comment.model';
+import { AuthService } from 'src/app/Services/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-publication',
@@ -20,7 +22,21 @@ export class PublicationComponent implements OnInit {
 
   imagesCount : number = 0;
   commentsCount : number = 0;
-  constructor(private route : ActivatedRoute, private comunity : ComunityServiceService) { }
+
+  isLogged : boolean = false;
+
+  formComment : FormGroup = this.formbuilder.group({
+    comment : ['',Validators.required]
+  })
+  idUserCurrently : number = 0;
+
+  isAuthor : boolean = false
+
+  constructor(private route : ActivatedRoute, 
+    private comunity : ComunityServiceService,
+     private auth : AuthService, 
+    private formbuilder : FormBuilder,
+    private router : Router) { }
 
   ngOnInit(): void {
     this.idPublication = +this.route.snapshot.paramMap.get('id');
@@ -29,6 +45,20 @@ export class PublicationComponent implements OnInit {
         this.publication = res.data as Publication
         this.imagesCount = this.publication.multimedia.length;
         this.commentsCount = this.publication.comentarios.length;
+        this.auth.User.subscribe(e => {
+          if(Object.entries(e).length > 0){
+            this.isLogged = true
+            this.idUserCurrently = e.idUsuario;
+            if(e.idUsuario === this.publication.idAutor){
+              this.isAuthor = true; 
+            }else{
+              this.isAuthor = false;
+            }
+          }
+          else{
+            this.isLogged = false;
+          }
+        })
       }
     })
   }
@@ -48,5 +78,20 @@ export class PublicationComponent implements OnInit {
     return null
   }
 
+  agregarComentario(){
+    const data = new FormData();
+    data.append("descripcion",this.formComment.get('comment').value);
+    data.append('idPublicacion',this.idPublication.toString())
+    data.append('idAutor',this.idUserCurrently.toString())
 
+    this.comunity.addCommnet(data).subscribe({
+      next: (response) =>{console.log(response); window.location.reload()},
+      error : (response) => console.log("error" + response.message)
+    })
+  }
+
+  getIniciales(nombre : string , apellido: string){
+    if(nombre == null || apellido == null) return "";
+    return nombre.charAt(0) + apellido.charAt(0);
+  }
 }
