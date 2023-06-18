@@ -23,7 +23,7 @@ export class UserService {
   constructor(private _http : HttpClient) {
   }
   
-  addUser(User : User):Observable<Response>{
+  addUser(User : FormData):Observable<Response>{
     return this._http.post<Response>(this.urlApiUser,User);
   }
 

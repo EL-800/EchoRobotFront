@@ -33,7 +33,7 @@ export class AuthService {
     return this.UserSubject.value;
   }
 
-  logging(logging: LoggingUser):Observable<Response>{
+  logging(logging: FormData):Observable<Response>{
     return this._httpCLient.post<Response>(this.AuthUrl,logging,httpOptions).pipe(
       map (res=>{
         if(res.exito === 1){
