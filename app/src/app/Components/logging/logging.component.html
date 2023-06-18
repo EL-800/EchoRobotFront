@@ -1,10 +1,8 @@
-
-
 <div class="container d-flex justify-content-center mt-5">
     <div class="card mb-3" style="max-width: 50rem;">
         <div class="row g-0">
             <div class="col-md-6">
-                <img src="assets/login2.jpg" class="img-fluid d-flex " alt="..." >
+                <img src="assets/login2.jpg" class="img-fluid d-flex " alt="...">
             </div>
             <div class="col-md-6 mt-4">
                 <div class="card-body ">
@@ -12,14 +10,18 @@
                         <h5 class="card-title">Iniciar Sesión</h5>
                     </div>
                     <div class="container mt-5 col-md-12">
-                        <form  #f = "ngForm" (ngSubmit)="f.form.valid && logging()">
+                        <form [formGroup]="formLogging" (submit)="logging()">
                             <div class="input-group mb-3">
                                 <fa-icon style="font-size:2rem; margin-right: 1rem;" [icon]="faEnvelope"></fa-icon>
-                                <input class="form-control" placeholder="Correo"  type="email" name="Email" [(ngModel)]="login.email">
+                                <input class="form-control" placeholder="Correo" type="email" formControlName="email">
                             </div>
                             <div class="input-group mb-4">
                                 <fa-icon style="font-size:2rem; margin-right: 1rem;" [icon]="faLock"></fa-icon>
-                                <input class="form-control" placeholder="Contraseña"  type="password" name="Password" [(ngModel)]="login.password">
+                                <input class="form-control" placeholder="Contraseña" type="password"
+                                    formControlName="password">
+                            </div>
+                            <div *ngIf="!isFormValid" class="alert alert-danger">
+                                Favor de llenar los campos correctamente
                             </div>
                             <div class="d-grid gap-2 ">
                                 <button class="btn btn-dark btn-lg" type="submit">Iniciar Sesion</button>
@@ -35,3 +37,20 @@
     </div>
 </div>
 
+<div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="false" [ngClass]="{'show d-block' : isOpenDialogBox}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Echo Robot</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeDialogBox()"></button>
+            </div>
+            <div class="modal-body">
+                {{dialogMessage}}
+            </div>
+            <div class="modal-footer">
+                <button (click)="closeDialogBox()" type="button" class="btn btn-primary">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
