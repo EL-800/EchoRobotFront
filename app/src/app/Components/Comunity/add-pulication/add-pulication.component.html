@@ -49,22 +49,33 @@
 
             </div>
             <div class="col-md-6">
-                <form (ngSubmit)="addPublication()"> 
+                <form (ngSubmit)="addPublication()" [formGroup]="addForm"> 
                     <div class="container d-flex justify-content-center flex-column mt-4">
                         <div class="input-group mb-3 col-md-6">
-                            <input class="form-control" placeholder="Titulo" type="text" [(ngModel)]="formulario.titulo"
+                            <input class="form-control" placeholder="Titulo" type="text" formControlName="Titulo"
                                 name="title">
                         </div>
                         <div class="input-group mb-3 col-md-6">
                             <div class="form-floating ">
                                 <textarea class="form-control text-tarea" placeholder="Añade un comentario"
-                                    [(ngModel)]="formulario.descripcion" name="comment"></textarea>
+                                    formControlName="Descripcion"></textarea>
                                 <label for="floatingTextArea">Añade un comentario</label>
                             </div>
                         </div>
+                        
                         <div class="mb-3">
-                            <input type="file" (change)="capturarFile($event)" class="form-control"
-                            [(ngModel)]="formulario.elementos" name="images" accept="image/*" multiple>
+                            <label  class="form-label">Ingresa las imagenes que desea</label>
+                            <input type="file"  (change)="capturarFile($event)" class="form-control"
+                            formControlName="Elements" accept="image/*" multiple>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label  class="form-label">Ingresa el xml del proyecto</label>
+                            <input type="file"  class="form-control"
+                            formControlName="Proyect" accept="text/xml" (change)="isXml($event)" id="proyect" formControlName="Proyect">
+                        </div>
+                        <div *ngIf="!isFormValid" class="alert alert-danger">
+                            Favor de llenar los campos correctamente
                         </div>
                         <div class="d-grid gap-2 mt-3 mb-4">
                             <input type="submit" class="btn btn-primary">
@@ -76,6 +87,23 @@
     </div>
 </div>
 
+<div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="false" [ngClass]="{'show d-block' : isOpenDialogBox}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Echo Robot</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeDialogBox()"></button>
+            </div>
+            <div class="modal-body">
+                {{dialogMessage}}
+            </div>
+            <div class="modal-footer">
+                <button (click)="closeDialogBox()" type="button" class="btn btn-primary">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!--
     <div class="container d-flex justify-content-center flex-column mt-4 col-md-6">
         <div class="input-group mb-3 col-md-6">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Sanitizer } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 import { min } from 'rxjs';
@@ -7,6 +7,8 @@ import { Publication } from 'src/app/models/publication.model';
 import { Comment } from 'src/app/models/comment.model';
 import { AuthService } from 'src/app/Services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { text } from '@fortawesome/fontawesome-svg-core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-publication',
@@ -31,12 +33,14 @@ export class PublicationComponent implements OnInit {
   idUserCurrently : number = 0;
 
   isAuthor : boolean = false
+  proyectPath : any = null;
 
   constructor(private route : ActivatedRoute, 
     private comunity : ComunityServiceService,
      private auth : AuthService, 
     private formbuilder : FormBuilder,
-    private router : Router) { }
+    private router : Router,
+    private sanitezer : DomSanitizer) { }
 
   ngOnInit(): void {
     this.idPublication = +this.route.snapshot.paramMap.get('id');
@@ -45,6 +49,7 @@ export class PublicationComponent implements OnInit {
         this.publication = res.data as Publication
         this.imagesCount = this.publication.multimedia.length;
         this.commentsCount = this.publication.comentarios.length;
+        this.uploadXml(this.publication.proyecto);
         this.auth.User.subscribe(e => {
           if(Object.entries(e).length > 0){
             this.isLogged = true
@@ -78,6 +83,8 @@ export class PublicationComponent implements OnInit {
     return null
   }
 
+  
+
   agregarComentario(){
     const data = new FormData();
     data.append("descripcion",this.formComment.get('comment').value);
@@ -94,4 +101,29 @@ export class PublicationComponent implements OnInit {
     if(nombre == null || apellido == null) return "";
     return nombre.charAt(0) + apellido.charAt(0);
   }
+
+
+  uploadXml(text : string ){
+    
+    this.extraerBase64(text).then((xml:any)=>{
+      this.proyectPath = xml.Blob;
+    })
+  }
+  extraerBase64= async(xml:string) => new Promise((resolve,reject)=>{
+    try{
+      const xmlBlob = new Blob([xml],{type:'text/xml'})
+      const file = window.URL.createObjectURL(xmlBlob)
+      const xmlFile = this.sanitezer.bypassSecurityTrustUrl(file);
+      const reader = new FileReader();
+      reader.readAsDataURL(xmlBlob);
+      reader.onload = ()=>{
+        resolve({
+          Blob: xmlFile,
+          base: reader.result
+        })
+      }
+    }catch(e){
+      return null
+    }
+  })
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
@@ -15,18 +16,27 @@ export class AddPulicationComponent implements OnInit {
 
   files : File[] = [];
   dataUrl : string[] = [];
-
+  isFormValid : boolean = true;
+  isOpenDialogBox:boolean = false;
+  dialogMessage : string ="";
+  xmlFile : File = {} as File;
   //formulario
-  formulario : PublicationRequest =  {
-    titulo: "",
-    descripcion : "",
-    elementos : [],
-    idAutor : 0
-    
-  }
+  
+
+  addForm : FormGroup = this.formBuilder.group({
+    Titulo : ['',[Validators.required,Validators.minLength(8)]], 
+    Descripcion : ['', [Validators.required , Validators.minLength(20)]],
+    Elements : [ [] ,[Validators.required]],
+    Proyect : [null,[Validators.required]]
+  })
+
 
   previsualizacion: string = "";
-  constructor(private sanitizer: DomSanitizer, private comunity : ComunityServiceService, private router : Router , private auth : AuthService) { }
+  constructor(private sanitizer: DomSanitizer, 
+    private comunity : ComunityServiceService,
+    private router : Router ,
+    private auth : AuthService, 
+    private formBuilder : FormBuilder) { }
 
   ngOnInit(): void {
   }
@@ -71,28 +81,50 @@ export class AddPulicationComponent implements OnInit {
   })
 
   addPublication(){
-    this.auth.User.subscribe(res =>{
-      this.formulario.idAutor = res.idUsuario;
-    })
 
-    let formData : FormData = new FormData();
-    formData.append("Titulo",this.formulario.titulo);
-    formData.append("IdAutor",this.formulario.idAutor.toString());
-    formData.append("Descripcion",this.formulario.descripcion);
-
-
-    for(let file of this.files){
-      formData.append("Elementos",file);
+    if(this.addForm.valid){
+      this.auth.User.subscribe(res =>{
+        const idAutor : number = res.idUsuario;
+        const formData : FormData = new FormData();
+        formData.append("Titulo",this.addForm.get('Titulo').value);
+        formData.append("IdAutor",idAutor.toString());
+        formData.append("Descripcion",this.addForm.get("Descripcion").value);
+        formData.append('Proyecto',this.xmlFile);
+        for(let file of this.files){
+          formData.append("Elementos",file);
+        }
+        this.comunity.addPublication(formData).subscribe({
+          next : ()=>{this.router.navigate(["/comunity"])},
+          error: ()=>{
+            this.dialogMessage = "Hubo un problema al publicar, intenta de nuevo"
+            this.isOpenDialogBox = true;
+          }
+        })
+      })
+    }else{
+      this.isFormValid = false
+      setTimeout(() => {
+        this.isFormValid = true;
+      }, 4000);
     }
-
-
-
-    this.comunity.addPublication(formData).subscribe(res =>{
-      if(res.exito === 1){
-        console.log(res);
-        this.router.navigate(["/comunity"])
-      }
-    })
+    
+  }
+  closeDialogBox(){
+    this.isOpenDialogBox = false;  
   }
 
+  isXml($event : any ){
+
+    if($event == null ) return null;
+
+    const file = $event.target.files[0];
+    this.xmlFile = file;
+    const name : string = file.name;
+
+    if(name.split('.')[1] !== 'xml'){
+      let input =<HTMLInputElement>document.getElementById('proyect')
+      input.value = null;
+    }
+  }
 }
+

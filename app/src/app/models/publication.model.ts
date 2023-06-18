@@ -10,5 +10,6 @@ export interface Publication{
     descripcion : string,
     multimedia : string[],
     comentarios : Comment[],
-    idAutor :number
+    idAutor :number,
+    proyecto : string;
 }
