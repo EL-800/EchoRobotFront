@@ -24,6 +24,8 @@ export class ComunityServiceService {
 
   urlAddComment : string = "https://localhost:7173/api/Comunity/AddComentario";
 
+  urlDeletePublication : string = "https://localhost:7173/api/Comunity/DeletePublicacion";
+
   constructor(private _httpCliet : HttpClient) { 
 
   }
@@ -47,5 +49,9 @@ export class ComunityServiceService {
 
   addCommnet(comment : FormData):Observable<Response>{
     return this._httpCliet.post<Response>(this.urlAddComment,comment,httpOptions);
+  }
+
+  deletePublication(id : number):Observable<any>{
+    return this._httpCliet.delete(this.urlDeletePublication + `?id=${id}`,httpOptions);
   }
 }

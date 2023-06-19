@@ -26,14 +26,17 @@ export class PublicationComponent implements OnInit {
   commentsCount : number = 0;
 
   isLogged : boolean = false;
-
+  isFormValid : boolean = true;
   formComment : FormGroup = this.formbuilder.group({
-    comment : ['',Validators.required]
+    comment : ['',[Validators.required, Validators.minLength(20)]]
   })
   idUserCurrently : number = 0;
 
   isAuthor : boolean = false
   proyectPath : any = null;
+
+  isOpenDialogBox : boolean = false
+  dialogMessage : string = "";
 
   constructor(private route : ActivatedRoute, 
     private comunity : ComunityServiceService,
@@ -91,10 +94,25 @@ export class PublicationComponent implements OnInit {
     data.append('idPublicacion',this.idPublication.toString())
     data.append('idAutor',this.idUserCurrently.toString())
 
+    if(this.formComment.valid){
+      this.comunity.addCommnet(data).subscribe({
+        next: (response) =>{console.log(response); window.location.reload()},
+        error : (response) => {
+          this.dialogMessage = "Ocurrio un problema, vueva a intentarlo"
+          this.isOpenDialogBox = true;
+        }
+      })
+    }else{
+      this.isFormValid = false
+      setTimeout(() => {
+        this.isFormValid = true;
+      }, 4000);
+    }
+    /*
     this.comunity.addCommnet(data).subscribe({
       next: (response) =>{console.log(response); window.location.reload()},
       error : (response) => console.log("error" + response.message)
-    })
+    })*/
   }
 
   getIniciales(nombre : string , apellido: string){
@@ -126,4 +144,22 @@ export class PublicationComponent implements OnInit {
       return null
     }
   })
+
+  closeDialogBox(){
+    this.isOpenDialogBox= false;
+  }
+
+  deletePublication(){
+    const confirmacion = confirm("¿Seguto que deseas eliminar la publicacion?")
+    if(confirmacion){
+      console.log(this.publication.idPublicacion)
+      this.comunity.deletePublication(this.publication.idPublicacion).subscribe({
+        next: ()=>{this.router.navigate(['/comunity'])},
+        error : (response) => {
+          this.dialogMessage = "Ocurrio un problema, vueva a intentarlo"
+          this.isOpenDialogBox = true;
+        }
+      })
+    }
+  }
 }

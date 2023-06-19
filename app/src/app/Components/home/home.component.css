@@ -1,0 +1,15 @@
+.tittle {
+    font-family: Impact, Charcoal, sans-serif;
+    font-size: 60px;
+    letter-spacing: 1.4px;
+    word-spacing: 1.6px;
+    color: #646464;
+    font-weight: 400;
+    text-decoration: none solid rgb(68, 68, 68);
+    font-style: italic;
+    font-variant: small-caps;
+    text-transform: uppercase;
+}
+p{
+    font-size: large;
+}

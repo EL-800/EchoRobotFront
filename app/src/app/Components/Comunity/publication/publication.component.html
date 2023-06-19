@@ -4,7 +4,7 @@
             <h1>{{publication.titulo}}</h1>
         </div>
         <div class="col-3" *ngIf="isAuthor">
-            <button class="btn btn-danger">Eliminar Publicacion</button>
+            <button class="btn btn-danger" (click)="deletePublication()">Eliminar Publicacion</button>
         </div>
     </div>
     <div class="mt-2">
@@ -74,7 +74,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="col-md-7 d-flex  mt-4 flex-column">
+                <div class="col-md-8 d-flex  mt-4 flex-column">
                     <div class="element justify-content-end">
                         <fa-icon style="font-size:2rem;" [icon]="faComment"></fa-icon>
                         <h5>{{commentsCount}}</h5>
@@ -125,11 +125,34 @@
                         <div class="mb-4">
                             <input type="submit" class="btn btn-primary" value="Agregar comentario">
                         </div>
+
+                        <div class="alert alert-danger" role="alert" *ngIf="!isFormValid">
+                            Favor de ingresar un comentario min de 20 caracteres.
+                          </div>
                     </form>
                 </div>
             </div>
         </div>
 
 
+    </div>
+</div>
+
+
+<div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="false" [ngClass]="{'show d-block' : isOpenDialogBox}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Echo Robot</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeDialogBox()"></button>
+            </div>
+            <div class="modal-body">
+                {{dialogMessage}}
+            </div>
+            <div class="modal-footer">
+                <button (click)="closeDialogBox()" type="button" class="btn btn-primary">Entendido</button>
+            </div>
+        </div>
     </div>
 </div>
