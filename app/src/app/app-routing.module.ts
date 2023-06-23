@@ -6,14 +6,16 @@ import { LoggingComponent } from './Components/logging/logging.component';
 import { HomeComunityComponent } from './Components/Comunity/home-comunity/home-comunity.component';
 import { AddPulicationComponent } from './Components/Comunity/add-pulication/add-pulication.component';
 import { PublicationComponent } from './Components/Comunity/publication/publication.component';
+import { AuthGuard } from './Security/auth.guard';
+import { UserGuard } from './Security/user.guard';
 
 const routes: Routes = [
   {path:'',redirectTo:'/home',pathMatch:'full'},
   {path:'home',component:HomeComponent},
-  {path:"registro", component:RegistroComponent},
-  {path:"auth/logging",component:LoggingComponent},
+  {path:"registro", component:RegistroComponent, canActivate:[UserGuard]},
+  {path:"auth/logging",component:LoggingComponent, canActivate:[UserGuard]},
   {path:"comunity",component:HomeComunityComponent},
-  {path: "comunity/AddPublication",component:AddPulicationComponent},
+  {path: "comunity/AddPublication",component:AddPulicationComponent,canActivate:[AuthGuard]},
   {path: "comunity/Publication/:id",component:PublicationComponent}
 ];
 

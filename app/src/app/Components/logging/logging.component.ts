@@ -44,6 +44,9 @@ export class LoggingComponent implements OnInit {
           }else if(response.status == 400){
             this.dialogMessage = "Hubo un problema con el servidor :("
           }
+          else{
+            this.dialogMessage="Error al iniciar Sesion"
+          }
           this.isOpenDialogBox = true;
         }
       });

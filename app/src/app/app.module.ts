@@ -15,6 +15,7 @@ import { JwtInterceptor } from './Security/jwt.interceptor';
 import { HomeComunityComponent } from './Components/Comunity/home-comunity/home-comunity.component';
 import { AddPulicationComponent } from './Components/Comunity/add-pulication/add-pulication.component';
 import { PublicationComponent } from './Components/Comunity/publication/publication.component';
+import { FooterComponent } from './Components/footer/footer.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { PublicationComponent } from './Components/Comunity/publication/publicat
     LoggingComponent,
     HomeComunityComponent,
     AddPulicationComponent,
-    PublicationComponent
+    PublicationComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
